@@ -1,0 +1,31 @@
+{
+    "TenantData":[
+        {
+            "Tenant_ID":1,
+            "Tenant_Name":"freya",
+            "Location":"neflheim",
+            "Moved_In":"01/01/2023",
+            "Moved_Out":"01/02/2023",
+            "Landlord_ID":1,
+            "Action":"Edit"
+        },
+        {
+            "Tenant_ID":2,
+            "Tenant_Name":"Kratos",
+            "Location":"Midgard",
+            "Moved_In":"01/01/2023",
+            "Moved_Out":"01/02/2023",
+            "Landlord_ID":2,
+            "Action":"Edit"
+        },
+        {
+            "Tenant_ID":3,
+            "Tenant_Name":"Atreus",
+            "Location":"Asgard",
+            "Moved_In":"01/01/2023",
+            "Moved_Out":"01/02/2023",
+            "Landlord_ID":3,
+            "Action":"Edit"
+        }
+    ]
+}

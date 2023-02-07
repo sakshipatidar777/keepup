@@ -1,0 +1,30 @@
+{
+    "LandlordData":[
+        {
+            "Landlord_ID":1,
+            "Landlord_Name":"freya",
+            "Location":"Alfheim",
+            "Rate":"5000",
+            "Create":"01/02/2023",
+            "Action":"Edit"
+        },
+        {
+            "Landlord_ID":2,
+            "Landlord_Name":"Kratos",
+            "Location":"neflheim",
+            "Rate":"5000",
+            "Create":"01/02/2023",
+            "Action":"Edit"
+        },
+        {
+            "Landlord_ID":3,
+            "Landlord_Name":"Atreus",
+            "Location":"Jotunheim",
+            "Rate":"5000",
+            "Create":"01/02/2023",
+            "Action":"Edit"
+        }
+        
+
+    ]
+}

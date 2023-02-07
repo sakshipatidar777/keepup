@@ -1,0 +1,13 @@
+{
+    "RepairerData":[{
+        "id": 1,
+        "name": "Ravi",
+        "email": "ravi@gmail.com",
+        "contact_no": "5184987984",
+        "type_of_repairs": "electrician"
+
+            }
+          
+    ]
+}
+        
