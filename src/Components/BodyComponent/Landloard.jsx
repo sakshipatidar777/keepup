@@ -12,7 +12,7 @@ const Landloard=()=> {
   const [fileterData,setFilterData]=useState([]);
   const getLandloard =async()=>{
     try{
-      const response =await axois.get('')
+      const response =await axois.get('http://upkeep.crmcity.org:8093/adminpanel/landlord/')
       setLandloard(response.data);
       setFilterData(response.data);
     }catch(error){
@@ -22,26 +22,26 @@ const Landloard=()=> {
   };
 
   const columns=[
-    {
-      name:"Landlord_ID",
-      selector:(row)=>row.id,
-    },
+    // {
+    //   name:"Landlord_ID",
+    //   selector:(row)=>row.id,
+    // },
     {
       name:"Landlord_Name",
-      selector:(row)=> row.name,
+      selector:(row)=> row.landlord_name,
     },
     {
       name:"Location",
-      selector:(row)=> row.email,
+      selector:(row)=> row.location,
     },
     {
       name:"Rate",
-      selector:(row)=> row.contact_no,
+      selector:(row)=> row.rent,
     },
-    {
-      name:"Create",
-      selector:(row)=> row.type_of_repairs,
-    },
+    // {
+    //   name:"Create",
+    //   selector:(row)=> row.type_of_repairs,
+    // },
     {
       name:"Action",
       cell:row=><><button className='btn btn-primary me-2'onClick={()=> alert(row.name)}><MdEditNote/></button>
@@ -54,7 +54,7 @@ useEffect(()=>{
 },[]);
 useEffect(()=>{
   const result= landloard.filter(Landloard =>{
-    return Landloard.name.toLowerCase().match(search.toLocaleLowerCase());
+    return Landloard.landlord_name.toLowerCase().match(search.toLocaleLowerCase());
   });
   setFilterData(result)
 },[search]);

@@ -25,10 +25,12 @@ const Property=()=> {
     {
       name:"Property_ID",
       selector:(row)=>row.id,
+    
     },
     {
       name:" Property_Name",
       selector:(row)=> row.propertyName,
+    
     },
     {
       name:"Property_Capacity",
@@ -52,7 +54,7 @@ const Property=()=> {
     },
     {
       name:"Description",
-      selector:(row)=> row.discription,
+      selector:(row)=> row.description,
     },
     {
       name:"State",
@@ -74,7 +76,9 @@ useEffect(()=>{
 },[]);
 useEffect(()=>{
   const result= repairs.filter(Repairer =>{
-    return Repairer.name.toLowerCase().match(search.toLocaleLowerCase());
+    return Repairer.propertyName.toLowerCase().match(search.toLocaleLowerCase());
+    
+    
   });
   setFilterData(result)
 },[search]);
@@ -86,6 +90,7 @@ useEffect(()=>{
       subHeader subHeaderComponent={
         <input type='text' placeholder='search' className='w-25 form-control' value={search} onChange={(e)=>setSearch(e.target.value)}/>
       }
+      
 
     />
   

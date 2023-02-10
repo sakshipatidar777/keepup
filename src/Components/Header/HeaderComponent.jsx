@@ -9,7 +9,6 @@ import MyRecords from "../BodyComponent/MyRecords";
 import Repairer from "../BodyComponent/Repairer";
 import Property from "../BodyComponent/Property";
 import Logout from "../BodyComponent/Logout";
-import EditForm from "../BodyComponent/Dashboard/EditForm";
 import { useStyles } from "./HeaderStyles";
 import Signin from "../BodyComponent/Signin";
 
@@ -43,7 +42,7 @@ export default function HeaderComponent() {
           <Route exact path="/logout" render={() => <Logout />} />
           <Route exact path="/" render={() => <Dashboard />} />
           <Route exact path="/Signin" render={() => <Signin />} />
-          <Route exact path="/EditForm" render={() => <EditForm/>} />
+          
         </Switch>
       </Box>
     </div>

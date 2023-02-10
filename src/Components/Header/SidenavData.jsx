@@ -25,11 +25,7 @@ export default function SidenavData({ handleDrawerClose }) {
       link: "/Repairer",
       icon: <PostAddIcon/>,
     },
-    {
-      label: "EditForm",
-      link: "/EditForm",
-      icon: <PostAddIcon/>,
-    },
+    
     { label: "Property", link: "/Property", icon: <PostAddIcon /> },
     
     { label: " Notification", link: "/logout", icon: <NotificationsActiveIcon /> },
