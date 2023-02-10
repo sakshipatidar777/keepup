@@ -1,22 +1,42 @@
 import React from 'react'
 import { useState } from 'react';
 import Table from 'react-bootstrap/esm/Table';
+import Button from 'react-bootstrap/Button';
 const Property=()=> {
   const [dataa, setDataaa]=useState([]);
+  const[filterVal,setFilterVal]=useState('');
+  const[searchApi,setSearchApi]=useState('');
 
   const apiGeta=()=>{
-    fetch('http://upkeep.crmcity.org:8090/Property/')
+    fetch('http://upkeep.crmcity.org:8092/Property/')
     .then((response) => response.json())
     .then((json) => {
       console.log(json);
       setDataaa(json);
+      setSearchApi(json);
     });
 };
+ const handleFilter=(e)=>{
+      if(e.target.value===''){
+        setDataaa(searchApi)
+      }else{
+       const filterResult= searchApi.filter(item =>item.propertyName.toLowerCase().includes(e.target.value.toLowerCase()))
+       if (filterResult.length>0){
+        setDataaa(filterResult)
+       }else{
+        setDataaa([{name:"No Data"}])
+       }
+  
+      }setFilterVal(e.target.value)
+ }
   return (
     <div>
       <h1>Property </h1>
+
+      <input type='Search' placeholder='search' onInput={(e)=>handleFilter(e)} className='m-3  text-center rounded'/>
      
-     <button onClick={apiGeta} className="bg-primary text-light">ClickHere</button>
+    
+     <Button onClick={apiGeta} variant="info">ClickHere</Button>
  <Table striped bordered hover variant="dark">
    <thead>
      <tr>
@@ -46,7 +66,7 @@ const Property=()=> {
         <td>{PData.postCode}</td>
         <td>{PData.description}</td>
         <td>{PData.state}</td>
-        <td>{PData.image}</td>
+        <td><img src={PData.image} className='img-fluid' alt="" /></td>
           </tr>
           ))}
 

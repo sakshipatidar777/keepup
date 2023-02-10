@@ -4,14 +4,15 @@ import LandlordData from './Landlord_Data.json';
 
 
 export default function Landlord() {
-   
+  
 
   return (
     <section>
           <div>
       <h1>Landlord Component</h1>
+      <input type='Search' placeholder='search' className='m-2 text-center rounded'/>
     </div>
-      <Table striped bordered hover variant="dark">
+      <Table striped bordered hover variant="dark"> 
         <thead>
         <tr>
           <th>Landlord_ID</th>

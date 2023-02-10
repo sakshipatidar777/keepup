@@ -1,47 +1,61 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
-import Table from 'react-bootstrap/esm/Table';
+import axois from 'axios';
+import DataTable from 'react-data-table-component';
+// import Table from 'react-bootstrap/esm/Table';
+// import Button from 'react-bootstrap/Button';
 const Repairer=()=> {
-  const [data, setData]=useState([]);
+  // const [data, setData]=useState([]);
 
-  const apiGet=()=>{
-    fetch('http://upkeep.crmcity.org:8090/AddRepair/')
-    .then((response) => response.json())
-    .then((json) => {
-      console.log(json);
-      setData(json);
-    });
-};
+  // const apiGet=()=>{
+  //   fetch('http://upkeep.crmcity.org:8090/AddRepair/')
+  //   .then((response) => response.json())
+  //   .then((json) => {
+  //     console.log(json);
+  //     setData(json);
+  //   });
+  const [repairs,setRepairs]=useState([]);
+  const getRepairs =async()=>{
+    try{
+      const response =await axois.get('http://upkeep.crmcity.org:8092/AddRepair/')
+      setRepairs(response.data);
+    }catch(error){
+      console.log(error);
+
+    }
+  };
+
+  const columns=[
+    {
+      ID:"id",
+      selector:(row)=> row.ID,
+    },
+    {
+      name:"name",
+      selector:(row)=> row.name,
+    },
+    {
+      name:"contact_no",
+      selector:(row)=> row.contact_no,
+    },
+    {
+      name:"type_of_repairs",
+      selector:(row)=> row.type_of_repairs,
+    },
+  ]
+useEffect(()=>{
+  getRepairs();
+},[]);
   return (
-    <div>
-      <h1>Repairer Component</h1>
      
-     <button onClick={apiGet} className="bg-primary text-light">ClickHere</button>
- <Table striped bordered hover variant="dark">
-   <thead>
-     <tr>
-       <th>id</th>
-       <th>name</th>
-       <th>email</th>
-       <th>contact_no</th>
-       <th>type_of_repairs</th>
-     </tr>
-   </thead>
-   <tbody>
-   {data.map((RepairerData)=>(
-        <tr>
-            <td>{RepairerData.id}</td>
-            <td>{RepairerData.name}</td>
-            <td>{RepairerData.email}</td>
-            <td>{RepairerData.contact_no}</td>
-            <td>{RepairerData.type_of_repairs}</td>
-          </tr>
-          ))}
+     <>
 
-   </tbody>
-   </Table>
-    </div>
+    <DataTable title ="RepaireList" columns={columns} data={repairs} pagination/>
+  
+   </>
+  
+    
   )
 }
+  export default Repairer;
 
-export default Repairer;

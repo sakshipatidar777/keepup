@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import SettingsIcon from "@material-ui/icons/Settings";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import { CgProfile  } from 'react-icons/cg';
 import image from "./unnamed.jpg";
 import { useStyles } from "../HeaderStyles";
 //import { Link } from "react-router-dom";
@@ -27,9 +28,10 @@ export default function Profile() {
   };
 
   const dropDownData = [
-    { label: "settings", icon: <SettingsIcon /> },
+    { label: "MyProfile", icon: <CgProfile /> },
     { label: "Logout", icon: <ExitToAppIcon /> },
     { label: "Signin", icon: <ExitToAppIcon /> },
+    { label: "settings", icon: <SettingsIcon /> },
   ];
   return (
     <Box>
@@ -37,8 +39,8 @@ export default function Profile() {
         aria-controls="simple-menu"
         aria-haspopup="true"
         onClick={handleClick}
-        startIcon={<Avatar src={image} className={classes.navAvatar}></Avatar>}
-      ></Button>
+        startIcon={<Avatar src={image} className={classes.navAvatar}></Avatar>} className="text-light"
+      >Diney </Button>
       <Menu
         id="simple-menu"
         anchorEl={anchorEl}
