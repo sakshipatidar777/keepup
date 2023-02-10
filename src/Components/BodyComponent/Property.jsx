@@ -1,79 +1,98 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
-import Table from 'react-bootstrap/esm/Table';
-import Button from 'react-bootstrap/Button';
+import axois from 'axios';
+import DataTable from 'react-data-table-component';
+import { MdEditNote,MdDeleteSweep } from 'react-icons/md';
+import { GrView } from 'react-icons/gr';
+
 const Property=()=> {
-  const [dataa, setDataaa]=useState([]);
-  const[filterVal,setFilterVal]=useState('');
-  const[searchApi,setSearchApi]=useState('');
-
-  const apiGeta=()=>{
-    fetch('http://upkeep.crmcity.org:8092/Property/')
-    .then((response) => response.json())
-    .then((json) => {
-      console.log(json);
-      setDataaa(json);
-      setSearchApi(json);
-    });
-};
- const handleFilter=(e)=>{
-      if(e.target.value===''){
-        setDataaa(searchApi)
-      }else{
-       const filterResult= searchApi.filter(item =>item.propertyName.toLowerCase().includes(e.target.value.toLowerCase()))
-       if (filterResult.length>0){
-        setDataaa(filterResult)
-       }else{
-        setDataaa([{name:"No Data"}])
-       }
   
-      }setFilterVal(e.target.value)
- }
+  const [repairs,setRepairs]=useState([]);
+  const [search,setSearch]=useState("");
+  const [fileterData,setFilterData]=useState([]);
+  const getRepairs =async()=>{
+    try{
+      const response =await axois.get('http://upkeep.crmcity.org:8092/Property/')
+      setRepairs(response.data);
+      setFilterData(response.data);
+    }catch(error){
+      console.log(error);
+
+    }
+  };
+
+  const columns=[
+    {
+      name:"Property_ID",
+      selector:(row)=>row.id,
+    },
+    {
+      name:" Property_Name",
+      selector:(row)=> row.propertyName,
+    },
+    {
+      name:"Property_Capacity",
+      selector:(row)=> row.propertyCapacity,
+    },
+    {
+      name:"Address1",
+      selector:(row)=> row.address1,
+    },
+    {
+      name:"Address2",
+      selector:(row)=> row.address2,
+    },
+    {
+      name:"City",
+      selector:(row)=> row.city,
+    },
+    {
+      name:"Post_Code",
+      selector:(row)=> row.postCode,
+    },
+    {
+      name:"Description",
+      selector:(row)=> row.discription,
+    },
+    {
+      name:"State",
+      selector:(row)=> row.state,
+    },
+    {
+      name:"Property_image",
+      selector:(row)=> <img width={50} height={50} src={row.images}/>
+    },
+    {
+      name:"Action",
+      cell:row=><><button className='btn btn-primary me-2'onClick={()=> alert(row.name)}><MdEditNote/></button>
+      <button className='btn btn-danger ms-2 me-2'onClick={()=> alert(row.id)}><MdDeleteSweep/></button>
+      <button className='btn btn-success ms-2 me-5'onClick={()=> alert(row.id)}><GrView/></button></>
+    }
+  ]
+useEffect(()=>{
+  getRepairs();
+},[]);
+useEffect(()=>{
+  const result= repairs.filter(Repairer =>{
+    return Repairer.name.toLowerCase().match(search.toLocaleLowerCase());
+  });
+  setFilterData(result)
+},[search]);
   return (
-    <div>
-      <h1>Property </h1>
-
-      <input type='Search' placeholder='search' onInput={(e)=>handleFilter(e)} className='m-3  text-center rounded'/>
      
-    
-     <Button onClick={apiGeta} variant="info">ClickHere</Button>
- <Table striped bordered hover variant="dark">
-   <thead>
-     <tr>
-       <th>id</th>
-        <th>propertyName</th>
-        <th>totalRoom</th>
-        <th>propertyCapacity</th>
-        <th>address1</th>
-        <th>address2</th>
-        <th>city</th>
-        <th>postCode</th>
-        <th>description</th>
-        <th>state</th>
-        <th>image</th>
-     </tr>
-   </thead>
-   <tbody>
-   {dataa.map((PData)=>(
-        <tr>
-        <td>{PData.id}</td>
-        <td>{PData.propertyName}</td>
-        <td>{PData.totalRoom}</td>
-        <td>{PData.propertyCapacity}</td>
-        <td>{PData.address1}</td>
-        <td>{PData.address2}</td>
-        <td>{PData.city}</td>
-        <td>{PData.postCode}</td>
-        <td>{PData.description}</td>
-        <td>{PData.state}</td>
-        <td><img src={PData.image} className='img-fluid' alt="" /></td>
-          </tr>
-          ))}
+     <>
 
-   </tbody>
-   </Table>
-    </div>
+    <DataTable title ="Property" columns={columns} data={fileterData} pagination fixedHeader selectableRows highlightOnHover 
+      subHeader subHeaderComponent={
+        <input type='text' placeholder='search' className='w-25 form-control' value={search} onChange={(e)=>setSearch(e.target.value)}/>
+      }
+
+    />
+  
+   </>
+  
+    
   )
 }
+  export default Property;
 
-export default Property;

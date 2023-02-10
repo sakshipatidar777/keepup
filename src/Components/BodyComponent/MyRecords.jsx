@@ -1,47 +1,77 @@
-import React from "react";
-import Table from 'react-bootstrap/Table';
-import Tenant from './TenantData.json';
-import { MdDelete,MdEditNote } from 'react-icons/md';
 
+import React, { useEffect } from 'react'
+import { useState } from 'react';
+import axois from 'axios';
+import DataTable from 'react-data-table-component';
+import { MdEditNote,MdDeleteSweep } from 'react-icons/md';
+import { GrView } from 'react-icons/gr';
 
+const Repairer=()=> {
+  
+  const [repairs,setRepairs]=useState([]);
+  const [search,setSearch]=useState("");
+  const [fileterData,setFilterData]=useState([]);
+  const getRepairs =async()=>{
+    try{
+      const response =await axois.get('')
+      setRepairs(response.data);
+      setFilterData(response.data);
+    }catch(error){
+      console.log(error);
 
-export default function Link() {
-  // const PopupContext = createContext()
-  // const [value, setValue] = useState()
-  //  const triggerPopup = text => setValue(text)
-  //  const clearPopup = () => setValue()
+    }
+  };
+
+  const columns=[
+    {
+      name:"History_ID",
+      selector:(row)=>row.id,
+    },
+    {
+      name:"Rome_rented_id",
+      selector:(row)=> row.name,
+    },
+    {
+      name:"Paid_rent",
+      selector:(row)=> row.email,
+    },
+    {
+      name:"Started_renting",
+      selector:(row)=> row.contact_no,
+    },
+   
+    {
+      name:"Action",
+      cell:row=><><button className='btn btn-primary me-2'onClick={()=> alert(row.name)}><MdEditNote/></button>
+      <button className='btn btn-danger ms-2 me-2'onClick={()=> alert(row.id)}><MdDeleteSweep/></button>
+      <button className='btn btn-success ms-2 me-5'onClick={()=> alert(row.id)}><GrView/></button></>
+    }
+  ]
+useEffect(()=>{
+  getRepairs();
+},[]);
+useEffect(()=>{
+  const result= repairs.filter(Repairer =>{
+    return Repairer.name.toLowerCase().match(search.toLocaleLowerCase());
+  });
+  setFilterData(result)
+},[search]);
   return (
-    <section>
-          <div>
-      <h1>My Records</h1>
-    </div>
-      <Table striped bordered hover variant="dark">
-        <thead>
-        <tr>
-          <th>History_ID</th>
-          <th>Rome_rented_id</th>
-          <th>Paid_rent</th>
-          <th>Started_renting</th>
-          <th>Action</th>
-         
-        </tr>
-        </thead>
-        <tbody>
-            {Tenant.TenantData.map((TenantData) => {
-              return <tr>
-                <td>{TenantData.History_ID}</td>
-                <td>{TenantData.Rome_rented_id}</td>
-                <td>{TenantData.Paid_rent}</td>
-                <td>{TenantData.Started_renting}</td>
-                <td><button className="btn text-danger btn-act" data-toggle="modal"><MdDelete/> </button>
-                <button className="btn text-primary btn-act" data-toggle="modal"> <MdEditNote/></button>
-              </td>
-              </tr>
+     
+     <>
 
-})}
+    <DataTable title ="MyRecord" columns={columns} data={fileterData} pagination fixedHeader selectableRows highlightOnHover 
+      subHeader subHeaderComponent={
+        <input type='text' placeholder='search' className='w-25 form-control' value={search} onChange={(e)=>setSearch(e.target.value)}/>
+      }
 
-        </tbody>
-      </Table>
-    </section>
-  );
+    />
+  
+   </>
+  
+    
+  )
 }
+  export default Repairer;
+
+
